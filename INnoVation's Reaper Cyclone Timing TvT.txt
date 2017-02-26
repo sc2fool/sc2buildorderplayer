@@ -1,0 +1,21 @@
+  14	  0:17	  Supply Depot	  
+  15	  0:28	  Refinery	  
+  16	  0:44	  Barracks	  
+  17	  0:56	  Refinery	  
+  19	  1:32	  Reaper, Orbital Command	  
+  20	  1:36	  Factory	  
+  20	  1:47	  Supply Depot	  
+  21	  2:05	  Reaper	  @100% Reaper
+  23	  2:19	  Cyclone	  @100% Factory
+  27	  2:23	  Starport	  @100% Factory
+  27	  2:28	  Supply Depot	  @100 Minerals
+  28	  2:39	  Barracks Tech Lab	  @100% Reaper
+  30	  2:52	  Hellion	  @100% Cyclone
+  32	  3:06	  Raven	  Swap Barracks and Starport
+  32	  3:25	  Barracks Reactor, Command Center	  @400 Minerals
+  32	  3:27	  Factory Tech Lab	  @100% Hellion
+  32	  3:45	  Siege Tank	  @125 Gas, or delay to get Stimpack
+  35	  3:51	  Marine x2	  Constant production
+  37	  3:52	  Viking	  @100% Raven
+  39	  4:30	  Viking x2	  Swap Starport and Barracks
+  60	  5:18	  Stimpack

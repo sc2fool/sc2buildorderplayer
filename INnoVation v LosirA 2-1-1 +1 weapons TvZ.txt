@@ -1,0 +1,63 @@
+  14	  0:17	  Supply Depot	  
+  15	  0:40	  Barracks	  
+  16	  0:43	  Refinery	  
+  19	  1:27	  Orbital Command, Reaper	  
+  20	  1:38	  Command Center	  
+  20	  1:50	  Barracks	  
+  21	  1:59	  Barracks Reactor	  
+  22	  2:09	  Supply Depot	  
+  22	  2:12	  Refinery	  
+  22	  2:22	  Factory	  
+  23	  2:35	  Marine x2	  
+  26	  2:37	  Barracks Tech Lab	  
+  27	  2:53	  Marine	  
+  27	  2:54	  Marine	  
+  27	  2:56	  Stimpack, Marine	  
+  31	  3:00	  Orbital Command	  
+  32	  3:15	  Starport	  
+  32	  3:20	  Marine x2	  
+  32	  3:21	  Marine	  
+  32	  3:23	  Factory Reactor	  
+  37	  3:35	  Supply Depot	  
+  37	  3:38	  Marine x2	  
+  44	  3:58	  Supply Depot	  
+  44	  4:01	  Medivac x2	  
+  53	  4:11	  Engineering Bay	  
+  54	  4:22	  Supply Depot	  
+  58	  4:31	  Medivac	  
+  62	  4:39	  Terran Infantry Weapons Level 1	  
+  66	  4:59	  Combat Shields	  
+  72	  5:17	  Command Center	  
+  72	  5:19	  Factory Reactor	  
+  73	  5:26	  Barracks	  
+  77	  5:41	  Barracks	  
+  80	  5:43	  Barracks	  
+  75	  5:58	  Widow Mine	  
+  75	  5:59	  Widow Mine	  
+  75	  6:00	  Refinery	  
+  75	  6:01	  Refinery	  
+  75	  6:03	  Medivac x2	  
+  69	  6:15	  Barracks Reactor	  
+  74	  6:27	  Widow Mine x2	  
+  74	  6:32	  Barracks Reactor	  
+  83	  6:34	  Terran Infantry Armor Level 1, Barracks Reactor	  
+  83	  6:47	  Armory	  
+  85	  6:48	  Engineering Bay	  
+  85	  6:53	  Orbital Command	  
+  92	  7:02	  Medivac x2	  
+  92	  7:04	  Widow Mine	  
+  92	  7:06	  Widow Mine	  
+  116	  7:34	  Widow Mine	  
+  117	  7:45	  Medivac x2, Widow Mine	  
+  117	  7:48	  Terran Infantry Weapons Level 2	  
+  125	  8:06	  Barracks	  
+  125	  8:08	  Barracks	  
+  133	  8:17	  Widow Mine x2, Barracks	  
+  133	  8:19	  Medivac	  
+  136	  8:22	  Refinery	  
+  136	  8:33	  Marauder	  
+  144	  8:54	  Marauder	  
+  155	  8:56	  Terran Infantry Armor Level 2	  
+  155	  8:57	  Barracks Tech Lab, Barracks Reactor	  
+  164	  9:11	  Barracks Reactor	  
+  163	  9:22	  Marauder
