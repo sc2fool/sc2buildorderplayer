@@ -15,9 +15,11 @@ from requests.exceptions import ConnectionError
 
 import gi
 gi.require_version('Gtk', '3.0')
+gi.require_version('Notify', '0.7')
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GObject
+from gi.repository import Notify
 
 
 UI_URL = "http://localhost:6119/ui"
@@ -34,6 +36,8 @@ class BuildOrderItem(Gtk.ListBoxRow):
 class BOPMainWindow(Gtk.Window):
     def __init__(self, app):
         Gtk.Window.__init__(self, title="SC2 Build Order Player", application=app)
+        Notify.init("bop")
+        self.notify = None
 
         self.set_default_size(400, 200)
         self.set_border_width(10)
@@ -119,9 +123,11 @@ class BOPMainWindow(Gtk.Window):
             new_item = BuildOrderItem(item)
             if item == self.items[self.current_index]:
                 selected_child = new_item
+                self.notify = Notify.Notification.new("", item)
             self.buildorderlist.add(new_item)
         self.buildorderlist.select_row(selected_child)
         self.buildorderlist.show_all()
+        self.notify.show()
 
     def update_buildorderlist(self, mi, ss):
         game_ts = int(mi * 60 + ss)
