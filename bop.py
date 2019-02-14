@@ -8,6 +8,7 @@ A simple GUI to sync a build order with in game time.
 """
 import sys
 import glob
+import os
 
 import cairo
 import requests
@@ -16,6 +17,8 @@ from requests.exceptions import ConnectionError
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('Notify', '0.7')
+from gi.repository import GLib
+from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GObject
@@ -37,7 +40,6 @@ class BOPMainWindow(Gtk.Window):
     def __init__(self, app):
         Gtk.Window.__init__(self, title="SC2 Build Order Player", application=app)
         Notify.init("bop")
-        self.notify = None
 
         self.set_default_size(400, 200)
         self.set_border_width(10)
@@ -54,7 +56,9 @@ class BOPMainWindow(Gtk.Window):
 
         filecombo = Gtk.ComboBoxText.new()
         self.selected_buildorder = None
-        for filename in glob.glob("*.txt"):
+        self.path = os.path.abspath(app.buildorders_path)
+        for filename in glob.glob(os.path.join(self.path, "*.txt")):
+            filename = os.path.basename(filename)
             if not self.selected_buildorder:
                 self.selected_buildorder = filename
             filecombo.append_text(filename)
@@ -87,6 +91,11 @@ class BOPMainWindow(Gtk.Window):
 
         self.current_index = 0
 
+    def notify(self, message):
+        notification = Notify.Notification.new("", message)
+        notification.set_timeout(2000)
+        notification.show()
+
     def filecombo_changed(self, widget):
         text=widget.get_model()[widget.get_active_iter()][0]
         self.selected_buildorder = text
@@ -104,7 +113,7 @@ class BOPMainWindow(Gtk.Window):
 
     def get_buildorderlist(self):
         self.items = []
-        with open(self.selected_buildorder) as fd:
+        with open(os.path.join(self.path, self.selected_buildorder)) as fd:
             for line in fd:
                 line = line.strip()
                 supply, gametime, item = line.split(" ", 2)
@@ -123,12 +132,10 @@ class BOPMainWindow(Gtk.Window):
             new_item = BuildOrderItem(item)
             if item == self.items[self.current_index]:
                 selected_child = new_item
-                self.notify = Notify.Notification.new("", item)
-                self.notify.set_timeout(2000)
+                self.notify(item)
             self.buildorderlist.add(new_item)
         self.buildorderlist.select_row(selected_child)
         self.buildorderlist.show_all()
-        self.notify.show()
 
     def update_buildorderlist(self, mi, ss):
         game_ts = int(mi * 60 + ss)
@@ -171,11 +178,27 @@ class BOPMainWindow(Gtk.Window):
 
 
 class BOPApplication(Gtk.Application):
-    def __init__(self):
-        Gtk.Application.__init__(self)
+    def __init__(self, *args, **kwargs):
+        Gtk.Application.__init__(self,
+                                 *args,
+                                 flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
+                                 **kwargs)
+        self.add_main_option("path", ord("p"), GLib.OptionFlags.NONE,
+                             GLib.OptionArg.STRING, "Path to build order files", None)
+
+    def do_command_line(self, command_line):
+        options = command_line.get_options_dict()
+        options = options.end().unpack()
+        if "path" in options:
+            self.buildorders_path = options["path"]
+        else:
+            self.buildorders_path = ""
+        self.activate()
+        return 0
 
     def do_activate(self):
         win = BOPMainWindow(self)
+        win.notify("hejsan")
         win.show_all()
 
     def do_startup(self):
