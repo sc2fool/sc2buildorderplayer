@@ -198,7 +198,6 @@ class BOPApplication(Gtk.Application):
 
     def do_activate(self):
         win = BOPMainWindow(self)
-        win.notify("hejsan")
         win.show_all()
 
     def do_startup(self):
