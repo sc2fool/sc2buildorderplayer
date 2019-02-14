@@ -124,6 +124,7 @@ class BOPMainWindow(Gtk.Window):
             if item == self.items[self.current_index]:
                 selected_child = new_item
                 self.notify = Notify.Notification.new("", item)
+                self.notify.set_timeout(2000)
             self.buildorderlist.add(new_item)
         self.buildorderlist.select_row(selected_child)
         self.buildorderlist.show_all()
