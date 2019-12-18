@@ -33,7 +33,7 @@ class BuildOrderItem(Gtk.ListBoxRow):
     def __init__(self, data):
         super(Gtk.ListBoxRow, self).__init__()
         self.data = data
-        self.add(Gtk.Label(data, xalign=0))
+        self.add(Gtk.Label(label=data, xalign=0))
 
 
 class BOPMainWindow(Gtk.Window):
@@ -41,7 +41,7 @@ class BOPMainWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="SC2 Build Order Player", application=app)
         Notify.init("bop")
 
-        self.set_default_size(400, 200)
+        self.set_default_size(600, 200)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
@@ -65,10 +65,10 @@ class BOPMainWindow(Gtk.Window):
         filecombo.connect("changed", self.filecombo_changed)
         topbox.pack_start(filecombo, False, True, 0)
 
-        timelabeltext = Gtk.Label("Game timer", halign=Gtk.Align.START)
+        timelabeltext = Gtk.Label(label="Game timer", halign=Gtk.Align.START)
         hbox.pack_start(timelabeltext, True, True, 0)
 
-        timelabel = Gtk.Label("00:00", xalign=0)
+        timelabel = Gtk.Label(label="00:00", xalign=0)
         hbox.pack_end(timelabel, False, True, 0)
 
         resetbutton = Gtk.Button(label="Reset")
@@ -87,13 +87,13 @@ class BOPMainWindow(Gtk.Window):
         self.get_buildorderlist()
         self.set_buildorderlist()
 
-        GObject.timeout_add(1000, self.update_timelabel,None)
+        GLib.timeout_add(1000, self.update_timelabel,None)
 
         self.current_index = 0
 
     def notify(self, message):
         notification = Notify.Notification.new("", message)
-        notification.set_timeout(2000)
+        notification.set_timeout(5000)
         notification.show()
 
     def filecombo_changed(self, widget):
@@ -116,7 +116,7 @@ class BOPMainWindow(Gtk.Window):
         with open(os.path.join(self.path, self.selected_buildorder)) as fd:
             for line in fd:
                 line = line.strip()
-                supply, gametime, item = line.split(" ", 2)
+                supply, gametime, item = line.split(None, 2)
                 self.items.append(line)
         self.current_index = 0
 
