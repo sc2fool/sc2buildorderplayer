@@ -48,11 +48,8 @@ class BOPMainWindow(Gtk.Window):
         box_outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.add(box_outer)
 
-        topbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        box_outer.pack_start(topbox, True, True, 0)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-        topbox.pack_end(hbox, True, True, 0)
+        topbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        box_outer.pack_start(topbox, False, True, 0)
 
         filecombo = Gtk.ComboBoxText.new()
         self.selected_buildorder = None
@@ -62,32 +59,32 @@ class BOPMainWindow(Gtk.Window):
             if not self.selected_buildorder:
                 self.selected_buildorder = filename
             filecombo.append_text(filename)
+        filecombo.set_active(0)
         filecombo.connect("changed", self.filecombo_changed)
-        topbox.pack_start(filecombo, False, True, 0)
+        topbox.pack_start(filecombo, True, True, 0)
 
-        timelabeltext = Gtk.Label(label="Game timer", halign=Gtk.Align.START)
-        hbox.pack_start(timelabeltext, True, True, 0)
-
-        timelabel = Gtk.Label(label="00:00", xalign=0)
-        hbox.pack_end(timelabel, False, True, 0)
-
-        resetbutton = Gtk.Button(label="Reset")
+        resetbutton = Gtk.Button(label="Reset", expand=False)
         resetbutton.connect("button-press-event", self.resetbutton_clicked)
         topbox.pack_start(resetbutton, True, True, 10)
 
-        self.timelabel = timelabel
+        timelabeltext = Gtk.Label(label="Game timer:", halign=Gtk.Align.END)
+        topbox.pack_start(timelabeltext, False, True, 0)
 
-        buildorderlist = Gtk.ListBox()
+        timelabel = Gtk.Label(label="--:--", halign=Gtk.Align.START)
+        topbox.pack_start(timelabel, False, True, 10)
+
+        buildorderlist = Gtk.ListBox(expand=True)
         box_outer.pack_end(buildorderlist, False, True, 0)
         buildorderlist.show_all()
 
+        self.timelabel = timelabel
         self.items = []
         self.buildorderlist = buildorderlist
 
         self.get_buildorderlist()
         self.set_buildorderlist()
 
-        GLib.timeout_add(1000, self.update_timelabel,None)
+        GLib.timeout_add(1000, self.update_timelabel, None)
 
         self.current_index = 0
 
@@ -120,7 +117,7 @@ class BOPMainWindow(Gtk.Window):
                 self.items.append(line)
         self.current_index = 0
 
-    def set_buildorderlist(self):
+    def set_buildorderlist(self, game_time=0):
         if self.current_index < 5:
             start_offset = 0
             end_offset = 11
@@ -132,7 +129,8 @@ class BOPMainWindow(Gtk.Window):
             new_item = BuildOrderItem(item)
             if item == self.items[self.current_index]:
                 selected_child = new_item
-                self.notify(item)
+                if game_time > 0:
+                    self.notify(item)
             self.buildorderlist.add(new_item)
         self.buildorderlist.select_row(selected_child)
         self.buildorderlist.show_all()
@@ -147,7 +145,7 @@ class BOPMainWindow(Gtk.Window):
         build_ts = int(str_mi) * 60 + int(str_ss)
         if game_ts >= build_ts:
             self.clear_buildorderlist()
-            self.set_buildorderlist()
+            self.set_buildorderlist(game_ts)
             self.current_index = self.current_index + 1
 
     def is_running(self):
@@ -168,8 +166,8 @@ class BOPMainWindow(Gtk.Window):
                 return False
 
             dt = req.json().get("displayTime")
-            mi = dt//60
-            ss = dt%60
+            mi = dt // 60
+            ss = dt % 60
             str = "{}:{}".format(int(mi),int(ss))
             self.timelabel.set_markup(str)
             self.update_buildorderlist(mi, ss)
